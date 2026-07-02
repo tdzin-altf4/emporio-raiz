@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empório Raiz — Mercadinho de bairro</title>
+<style>
+  :root{
+    --kraft: #ECDFC3;
+    --kraft-dark: #DECBA3;
+    --forest: #1F3A2E;
+    --forest-deep: #142720;
+    --ochre: #D08B27;
+    --tomato: #B23A2E;
+    --ink: #2A2118;
+    --cream: #FBF5E7;
+    --twine: #A98C5C;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--kraft);
+    color:var(--ink);
+    font-family:"Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+    line-height:1.6;
+  }
+
+  h1,h2,h3{
+    font-family:"Iowan Old Style","Palatino Linotype", Georgia, "Times New Roman", serif;
+    font-weight:700;
+    color:var(--forest-deep);
+  }
+
+  a{color:inherit;}
+
+  .stamp{
+    font-family:"Courier New", monospace;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--forest);
+    padding:16px 6vw;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:3px solid var(--ochre);
+  }
+  nav .brand{
+    color:var(--cream);
+    font-family:"Iowan Old Style","Palatino Linotype", Georgia, serif;
+    font-size:1.3rem;
+    letter-spacing:0.03em;
+  }
+  nav .brand span{color:var(--ochre);}
+  nav ul{
+    list-style:none;
+    display:flex; gap:28px;
+  }
+  nav ul a{
+    color:var(--cream);
+    text-decoration:none;
+    font-size:0.92rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    opacity:0.85;
+    transition:opacity 0.2s ease;
+  }
+  nav ul a:hover{opacity:1; color:var(--ochre);}
+  .nav-toggle{display:none; background:none; border:none; color:var(--cream); font-size:1.6rem; cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(208,139,39,0.12), transparent 55%),
+      linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color:var(--cream);
+    padding:9vh 6vw 14vh;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-inner{max-width:760px; position:relative; z-index:2;}
+  .hero .eyebrow{
+    font-family:"Courier New", monospace;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    font-size:0.8rem;
+    color:var(--ochre);
+    margin-bottom:18px;
+    display:inline-block;
+    border-bottom:1px solid var(--ochre);
+    padding-bottom:6px;
+  }
+  .hero h1{
+    color:var(--cream);
+    font-size:clamp(2.6rem, 6vw, 4.4rem);
+    line-height:1.05;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--ochre);
+  }
+  .hero p{
+    font-size:1.15rem;
+    max-width:480px;
+    color:rgba(251,245,231,0.82);
+    margin-bottom:36px;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--tomato);
+    color:var(--cream);
+    text-decoration:none;
+    padding:14px 30px;
+    font-family:"Courier New", monospace;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    font-size:0.85rem;
+    border:2px solid var(--cream);
+    outline:2px solid var(--tomato);
+    outline-offset:-6px;
+    transform:rotate(-1.5deg);
+    transition:transform 0.2s ease, background 0.2s ease;
+  }
+  .btn:hover{transform:rotate(0deg) scale(1.03); background:#98301F;}
+  .btn:focus-visible{outline:3px solid var(--ochre); outline-offset:3px;}
+
+  .hero-torn{
+    position:absolute; left:0; right:0; bottom:-1px; height:60px;
+    background:var(--kraft);
+    clip-path: polygon(0% 100%, 2% 40%, 5% 100%, 8% 45%, 11% 100%, 14% 38%, 17% 100%, 20% 42%, 23% 100%, 26% 40%, 29% 100%, 32% 44%, 35% 100%, 38% 38%, 41% 100%, 44% 42%, 47% 100%, 50% 40%, 53% 100%, 56% 44%, 59% 100%, 62% 38%, 65% 100%, 68% 42%, 71% 100%, 74% 40%, 77% 100%, 80% 44%, 83% 100%, 86% 38%, 89% 100%, 92% 42%, 95% 100%, 98% 40%, 100% 100%, 100% 100%, 0% 100%);
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:9vh 6vw;}
+  .section-head{
+    max-width:600px;
+    margin-bottom:52px;
+  }
+  .section-head .eyebrow{
+    font-family:"Courier New", monospace;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:0.78rem;
+    color:var(--tomato);
+    margin-bottom:10px;
+    display:block;
+  }
+  .section-head h2{font-size:clamp(1.8rem, 3.4vw, 2.6rem);}
+  .section-head p{color:#4A3F30; max-width:480px; margin-top:14px;}
+
+  /* ---------- FEATURED / PRICE TAGS ---------- */
+  .tags-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap:56px 32px;
+  }
+  .tag-card{
+    position:relative;
+    background:var(--cream);
+    border:1px solid rgba(42,33,24,0.12);
+    padding:26px 20px 22px;
+    box-shadow:0 10px 22px rgba(20,39,32,0.14);
+  }
+  .tag-card:nth-child(odd){transform:rotate(-1.4deg);}
+  .tag-card:nth-child(even){transform:rotate(1.2deg);}
+  .tag-card:hover{transform:rotate(0deg) translateY(-4px); transition:transform 0.25s ease;}
+  .tag-card::before{
+    content:"";
+    position:absolute;
+    top:-26px; left:50%;
+    width:2px; height:26px;
+    background:var(--twine);
+    transform:translateX(-50%);
+  }
+  .tag-card::after{
+    content:"";
+    position:absolute;
+    top:-32px; left:50%;
+    width:14px; height:14px;
+    border:2px solid var(--twine);
+    border-radius:50%;
+    background:var(--kraft);
+    transform:translateX(-50%);
+  }
+  .tag-emoji{font-size:2.1rem; margin-bottom:10px; display:block;}
+  .tag-card h3{font-size:1.15rem; margin-bottom:6px;}
+  .tag-card .desc{font-size:0.9rem; color:#5B4E3B; margin-bottom:16px;}
+  .tag-price{
+    font-family:"Courier New", monospace;
+    background:var(--forest);
+    color:var(--ochre);
+    display:inline-block;
+    padding:6px 12px;
+    font-size:1.05rem;
+    letter-spacing:0.03em;
+  }
+  .tag-unit{font-size:0.72rem; color:#7A6E5B; margin-top:6px;}
+
+  /* ---------- SOBRE ---------- */
+  .sobre{
+    background:var(--forest);
+    color:var(--cream);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+  }
+  .sobre .section-head p{color:rgba(251,245,231,0.75);}
+  .sobre .section-head .eyebrow{color:var(--ochre);}
+  .sobre-text p{margin-bottom:16px; color:rgba(251,245,231,0.85); max-width:480px;}
+  .crate{
+    aspect-ratio:4/3;
+    background:
+      repeating-linear-gradient(0deg, rgba(236,223,195,0.08) 0 2px, transparent 2px 34px),
+      repeating-linear-gradient(90deg, rgba(236,223,195,0.06) 0 2px, transparent 2px 34px),
+      linear-gradient(160deg, #2A4A38, #1A2F24);
+    border:6px solid var(--ochre);
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .crate span{
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    font-size:1.4rem;
+    color:var(--ochre);
+    text-align:center;
+    padding:20px;
+    border:2px dashed rgba(208,139,39,0.5);
+  }
+
+  /* ---------- HORARIO ---------- */
+  .horario-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+  }
+  .horario-card{
+    background:var(--cream);
+    border:1px solid rgba(42,33,24,0.12);
+    padding:32px;
+  }
+  .horario-card h3{
+    font-family:"Courier New", monospace;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-size:1rem;
+    color:var(--tomato);
+    margin-bottom:18px;
+    border-bottom:2px solid var(--tomato);
+    padding-bottom:10px;
+    display:inline-block;
+  }
+  .horario-row{
+    display:flex; justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px dashed rgba(42,33,24,0.18);
+    font-size:0.95rem;
+  }
+  .horario-row:last-child{border-bottom:none;}
+  .horario-row .dia{font-weight:600;}
+  .contato-card p{margin-bottom:14px; font-size:0.98rem;}
+  .contato-card .stamp-btn{margin-top:8px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--forest-deep);
+    color:rgba(251,245,231,0.65);
+    padding:40px 6vw;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:14px;
+    font-size:0.85rem;
+  }
+  footer .brand{
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    color:var(--cream);
+    font-size:1.05rem;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:820px){
+    .sobre{grid-template-columns:1fr;}
+    .horario-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    nav ul{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; background:var(--forest);
+      padding:18px 6vw; gap:16px;
+      display:none;
+      border-bottom:3px solid var(--ochre);
+    }
+    nav ul.open{display:flex;}
+    .nav-toggle{display:block;}
+    .hero{padding:8vh 6vw 12vh;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Empório <span>Raiz</span></div>
+  <button class="nav-toggle" aria-label="Abrir menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  <ul id="menu">
+    <li><a href="#destaques">Destaques</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#horario">Horário</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Mercearia de bairro desde sempre</span>
+    <h1>Comida boa, <em>gente próxima</em>, todo dia.</h1>
+    <p>Hortifruti fresco, produtos de mercearia selecionados e aquele atendimento que só quem é da vizinhança dá. Do nosso balcão pra sua mesa.</p>
+    <a class="btn" href="#destaques">Ver destaques da semana</a>
+  </div>
+  <div class="hero-torn"></div>
+</header>
+
+<section id="destaques">
+  <div class="section-head reveal">
+    <span class="eyebrow">Na feira desta semana</span>
+    <h2>Destaques do balcão</h2>
+    <p>Selecionados hoje de manhã — os preços valem enquanto durar o estoque.</p>
+  </div>
+  <div class="tags-grid">
+    <div class="tag-card reveal">
+      <span class="tag-emoji">🍅</span>
+      <h3>Tomate italiano</h3>
+      <p class="desc">Direto da horta da região, maduro no ponto certo.</p>
+      <span class="tag-price">R$ 6,90</span>
+      <p class="tag-unit">por kg</p>
+    </div>
+    <div class="tag-card reveal">
+      <span class="tag-emoji">🥖</span>
+      <h3>Pão artesanal</h3>
+      <p class="desc">Assado às 6h por padaria parceira do bairro.</p>
+      <span class="tag-price">R$ 9,50</span>
+      <p class="tag-unit">a unidade</p>
+    </div>
+    <div class="tag-card reveal">
+      <span class="tag-emoji">🧀</span>
+      <h3>Queijo minas curado</h3>
+      <p class="desc">Produção pequena, sabor forte e textura firme.</p>
+      <span class="tag-price">R$ 24,90</span>
+      <p class="tag-unit">por 500g</p>
+    </div>
+    <div class="tag-card reveal">
+      <span class="tag-emoji">🍯</span>
+      <h3>Mel silvestre</h3>
+      <p class="desc">De apiários da região, sem aquecimento.</p>
+      <span class="tag-price">R$ 18,00</span>
+      <p class="tag-unit">pote 300ml</p>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre-text section-head reveal">
+    <span class="eyebrow">Nossa história</span>
+    <h2>Um mercadinho, muitas famílias</h2>
+    <p>O Empório Raiz nasceu de um balcão pequeno e da vontade de trazer comida de verdade pra perto de casa. Trabalhamos direto com produtores da região, sem atravessador, pra manter o preço justo e o produto fresco.</p>
+    <p>Hoje somos parte do dia a dia do bairro — o lugar onde você esquece a lista de compras em casa e mesmo assim sai com tudo certo.</p>
+  </div>
+  <div class="crate reveal">
+    <span>Produtos frescos<br>direto do produtor<br>pra sua casa</span>
+  </div>
+</section>
+
+<section id="horario">
+  <div class="section-head reveal">
+    <span class="eyebrow">Fica de olho</span>
+    <h2>Horário e contato</h2>
+  </div>
+  <div class="horario-grid">
+    <div class="horario-card reveal">
+      <h3>Funcionamento</h3>
+      <div class="horario-row"><span class="dia">Segunda a sexta</span><span>7h30 – 20h00</span></div>
+      <div class="horario-row"><span class="dia">Sábado</span><span>7h30 – 18h00</span></div>
+      <div class="horario-row"><span class="dia">Domingo</span><span>8h00 – 13h00</span></div>
+    </div>
+    <div class="horario-card contato-card reveal" id="contato">
+      <h3>Fale com a gente</h3>
+      <p>📍 Rua das Palmeiras, 128 — Bairro Vila Nova</p>
+      <p>📞 (92) 99999-0000</p>
+      <p>💬 Encomendas também pelo WhatsApp</p>
+      <a class="btn stamp-btn" href="#">Chamar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">Empório Raiz</div>
+  <div>© 2026 Empório Raiz — feito com carinho pro bairro.</div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
