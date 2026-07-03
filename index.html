@@ -84,6 +84,25 @@
     overflow:hidden;
   }
   .hero-inner{max-width:760px; position:relative; z-index:2;}
+
+  /* Selo giratório — como um carimbo de qualidade */
+  .seal-stamp{
+    position:absolute; top:9vh; right:6vw; width:120px; height:120px; z-index:1;
+    opacity:0.9; will-change:transform;
+  }
+  .seal-stamp svg{width:100%; height:100%;}
+
+  @media (prefers-reduced-motion: reduce){
+    .seal-stamp{ transform:none !important; }
+  }
+
+  @media (max-width:900px){
+    .seal-stamp{ width:80px; height:80px; top:6vh; right:5vw; }
+  }
+
+  @media (max-width:640px){
+    .seal-stamp{ display:none; }
+  }
   .hero .eyebrow{
     font-family:"Courier New", monospace;
     letter-spacing:0.2em;
@@ -325,6 +344,18 @@
 </nav>
 
 <header class="hero">
+  <div class="seal-stamp" id="sealStamp">
+    <svg viewBox="0 0 120 120">
+      <defs>
+        <path id="sealCircle" d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"/>
+      </defs>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--ochre)" stroke-width="2"/>
+      <circle cx="60" cy="60" r="30" fill="none" stroke="var(--ochre)" stroke-width="1.5"/>
+      <text font-family="Courier New, monospace" font-size="9.5" letter-spacing="2" fill="var(--cream)">
+        <textPath href="#sealCircle" startOffset="0%">PRODUTO FRESCO • DIRETO DO PRODUTOR • </textPath>
+      </text>
+    </svg>
+  </div>
   <div class="hero-inner">
     <span class="eyebrow">Mercearia de bairro desde sempre</span>
     <h1>Comida boa, <em>gente próxima</em>, todo dia.</h1>
@@ -423,6 +454,19 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    // Selo de qualidade gira conforme a rolagem, como um carimbo
+    const sealStamp = document.getElementById('sealStamp');
+    function onScroll() {
+      if (sealStamp) {
+        sealStamp.style.transform = `rotate(${window.scrollY * 0.3}deg)`;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 </script>
 
 </body>
