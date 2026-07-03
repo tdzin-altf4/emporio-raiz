@@ -188,7 +188,11 @@
     background:var(--kraft);
     transform:translateX(-50%);
   }
-  .tag-emoji{font-size:2.1rem; margin-bottom:10px; display:block;}
+  .tag-photo{
+    width:64px; height:64px; border-radius:50%; overflow:hidden;
+    margin-bottom:12px; border:3px solid var(--ochre);
+  }
+  .tag-photo img{width:100%; height:100%; object-fit:cover; display:block;}
   .tag-card h3{font-size:1.15rem; margin-bottom:6px;}
   .tag-card .desc{font-size:0.9rem; color:#5B4E3B; margin-bottom:16px;}
   .tag-price{
@@ -216,21 +220,19 @@
   .sobre-text p{margin-bottom:16px; color:rgba(251,245,231,0.85); max-width:480px;}
   .crate{
     aspect-ratio:4/3;
-    background:
-      repeating-linear-gradient(0deg, rgba(236,223,195,0.08) 0 2px, transparent 2px 34px),
-      repeating-linear-gradient(90deg, rgba(236,223,195,0.06) 0 2px, transparent 2px 34px),
-      linear-gradient(160deg, #2A4A38, #1A2F24);
     border:6px solid var(--ochre);
     position:relative;
-    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
   }
-  .crate span{
-    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
-    font-size:1.4rem;
+  .crate img{width:100%; height:100%; object-fit:cover; display:block;}
+  .crate .crate-caption{
+    position:absolute; left:0; right:0; bottom:0;
+    background:rgba(20,39,32,0.82);
     color:var(--ochre);
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    font-size:1.1rem;
     text-align:center;
-    padding:20px;
-    border:2px dashed rgba(208,139,39,0.5);
+    padding:14px 20px;
   }
 
   /* ---------- HORARIO ---------- */
@@ -340,28 +342,28 @@
   </div>
   <div class="tags-grid">
     <div class="tag-card reveal">
-      <span class="tag-emoji">🍅</span>
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/1691180/pexels-photo-1691180.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Tomate italiano fresco"></div>
       <h3>Tomate italiano</h3>
       <p class="desc">Direto da horta da região, maduro no ponto certo.</p>
       <span class="tag-price">R$ 6,90</span>
       <p class="tag-unit">por kg</p>
     </div>
     <div class="tag-card reveal">
-      <span class="tag-emoji">🥖</span>
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/19987202/pexels-photo-19987202.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Pão artesanal fresco"></div>
       <h3>Pão artesanal</h3>
       <p class="desc">Assado às 6h por padaria parceira do bairro.</p>
       <span class="tag-price">R$ 9,50</span>
       <p class="tag-unit">a unidade</p>
     </div>
     <div class="tag-card reveal">
-      <span class="tag-emoji">🧀</span>
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/13079969/pexels-photo-13079969.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Queijo minas curado"></div>
       <h3>Queijo minas curado</h3>
       <p class="desc">Produção pequena, sabor forte e textura firme.</p>
       <span class="tag-price">R$ 24,90</span>
       <p class="tag-unit">por 500g</p>
     </div>
     <div class="tag-card reveal">
-      <span class="tag-emoji">🍯</span>
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/4921856/pexels-photo-4921856.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Mel silvestre em pote"></div>
       <h3>Mel silvestre</h3>
       <p class="desc">De apiários da região, sem aquecimento.</p>
       <span class="tag-price">R$ 18,00</span>
@@ -378,7 +380,8 @@
     <p>Hoje somos parte do dia a dia do bairro — o lugar onde você esquece a lista de compras em casa e mesmo assim sai com tudo certo.</p>
   </div>
   <div class="crate reveal">
-    <span>Produtos frescos<br>direto do produtor<br>pra sua casa</span>
+    <img src="https://images.pexels.com/photos/9705821/pexels-photo-9705821.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Vegetais frescos coloridos no balcão">
+    <div class="crate-caption">Produtos frescos, direto do produtor pra sua casa</div>
   </div>
 </section>
 
