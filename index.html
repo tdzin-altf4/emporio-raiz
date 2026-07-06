@@ -4,6 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Empório Raiz — Mercadinho de bairro</title>
+<meta name="description" content="Empório Raiz — hortifruti fresco, produtos de mercearia selecionados e o atendimento de vizinhança do seu bairro.">
+<link rel="canonical" href="https://tdzin-altf4.github.io/emporio-raiz/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ECDFC3'/%3E%3Cpath d='M16 5c-2 5-6 6-6 12a6 6 0 0 0 12 0c0-6-4-7-6-12z' fill='%231F3A2E'/%3E%3Ccircle cx='16' cy='19' r='2' fill='%23D08B27'/%3E%3C/svg%3E">
+
+<meta property="og:title" content="Empório Raiz — Mercadinho de bairro">
+<meta property="og:description" content="Hortifruti fresco, produtos de mercearia selecionados e atendimento de vizinhança, direto do balcão pra sua mesa.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tdzin-altf4.github.io/emporio-raiz/">
+<meta property="og:image" content="https://images.pexels.com/photos/9705821/pexels-photo-9705821.jpeg?auto=compress&cs=tinysrgb&w=1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Empório Raiz — Mercadinho de bairro">
+<meta name="twitter:description" content="Hortifruti fresco, produtos de mercearia selecionados e atendimento de vizinhança, direto do balcão pra sua mesa.">
+<meta name="twitter:image" content="https://images.pexels.com/photos/9705821/pexels-photo-9705821.jpeg?auto=compress&cs=tinysrgb&w=1200">
+
+<!-- REVISAR: dado fictício — telefone (92) 99999-0000 segue o padrão de número de exemplo (termina em -0000); confirmar o número real antes de publicar. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Empório Raiz",
+  "description": "Mercadinho de bairro com hortifruti fresco e produtos de mercearia selecionados.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua das Palmeiras, 128 — Bairro Vila Nova"
+  },
+  "telephone": "+5592999990000",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "07:30",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "07:30",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "08:00",
+      "closes": "13:00"
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --kraft: #ECDFC3;
@@ -35,6 +83,10 @@
   }
 
   a{color:inherit;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--ochre); outline-offset:3px; border-radius:2px;}
+
+  .skip-link{position:absolute; left:-999px; top:auto; background:var(--forest-deep); color:var(--cream); padding:12px 20px; z-index:100; font-size:0.85rem;}
+  .skip-link:focus{left:16px; top:16px;}
 
   .stamp{
     font-family:"Courier New", monospace;
@@ -211,7 +263,8 @@
     width:64px; height:64px; border-radius:50%; overflow:hidden;
     margin-bottom:12px; border:3px solid var(--ochre);
   }
-  .tag-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .tag-photo img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s ease;}
+  .tag-card:hover .tag-photo img{transform:scale(1.08);}
   .tag-card h3{font-size:1.15rem; margin-bottom:6px;}
   .tag-card .desc{font-size:0.9rem; color:#5B4E3B; margin-bottom:16px;}
   .tag-price{
@@ -243,7 +296,8 @@
     position:relative;
     overflow:hidden;
   }
-  .crate img{width:100%; height:100%; object-fit:cover; display:block;}
+  .crate img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s ease;}
+  .crate:hover img{transform:scale(1.03);}
   .crate .crate-caption{
     position:absolute; left:0; right:0; bottom:0;
     background:rgba(20,39,32,0.82);
@@ -309,6 +363,8 @@
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1; transform:none; transition:none;}
     html{scroll-behavior:auto;}
+    .tag-photo img, .crate img{transition:none !important;}
+    .tag-card:hover .tag-photo img, .crate:hover img{transform:none;}
   }
 
   /* ---------- RESPONSIVE ---------- */
@@ -328,13 +384,21 @@
     .nav-toggle{display:block;}
     .hero{padding:8vh 6vw 12vh;}
   }
+
+  @media (max-width:380px){
+    nav, .hero, section, footer{padding-left:20px; padding-right:20px;}
+    .hero h1{font-size:2.1rem;}
+    .section-head h2{font-size:1.6rem;}
+  }
 </style>
 </head>
 <body>
 
+<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
 <nav>
   <div class="brand">Empório <span>Raiz</span></div>
-  <button class="nav-toggle" aria-label="Abrir menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu" onclick="const m=document.getElementById('menu'); const open=m.classList.toggle('open'); this.setAttribute('aria-expanded', open);">☰</button>
   <ul id="menu">
     <li><a href="#destaques">Destaques</a></li>
     <li><a href="#sobre">Sobre</a></li>
@@ -343,7 +407,7 @@
   </ul>
 </nav>
 
-<header class="hero">
+<header class="hero" id="conteudo">
   <div class="seal-stamp" id="sealStamp">
     <svg viewBox="0 0 120 120">
       <defs>
@@ -373,28 +437,28 @@
   </div>
   <div class="tags-grid">
     <div class="tag-card reveal">
-      <div class="tag-photo"><img src="https://images.pexels.com/photos/1691180/pexels-photo-1691180.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Tomate italiano fresco"></div>
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/1691180/pexels-photo-1691180.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Tomate italiano fresco" width="64" height="64" loading="lazy"></div>
       <h3>Tomate italiano</h3>
       <p class="desc">Direto da horta da região, maduro no ponto certo.</p>
       <span class="tag-price">R$ 6,90</span>
       <p class="tag-unit">por kg</p>
     </div>
-    <div class="tag-card reveal">
-      <div class="tag-photo"><img src="https://images.pexels.com/photos/19987202/pexels-photo-19987202.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Pão artesanal fresco"></div>
+    <div class="tag-card reveal" style="transition-delay:.08s">
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/19987202/pexels-photo-19987202.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Pão artesanal fresco" width="64" height="64" loading="lazy"></div>
       <h3>Pão artesanal</h3>
       <p class="desc">Assado às 6h por padaria parceira do bairro.</p>
       <span class="tag-price">R$ 9,50</span>
       <p class="tag-unit">a unidade</p>
     </div>
-    <div class="tag-card reveal">
-      <div class="tag-photo"><img src="https://images.pexels.com/photos/13079969/pexels-photo-13079969.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Queijo minas curado"></div>
+    <div class="tag-card reveal" style="transition-delay:.16s">
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/13079969/pexels-photo-13079969.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Queijo minas curado" width="64" height="64" loading="lazy"></div>
       <h3>Queijo minas curado</h3>
       <p class="desc">Produção pequena, sabor forte e textura firme.</p>
       <span class="tag-price">R$ 24,90</span>
       <p class="tag-unit">por 500g</p>
     </div>
-    <div class="tag-card reveal">
-      <div class="tag-photo"><img src="https://images.pexels.com/photos/4921856/pexels-photo-4921856.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Mel silvestre em pote"></div>
+    <div class="tag-card reveal" style="transition-delay:.24s">
+      <div class="tag-photo"><img src="https://images.pexels.com/photos/4921856/pexels-photo-4921856.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Mel silvestre em pote" width="64" height="64" loading="lazy"></div>
       <h3>Mel silvestre</h3>
       <p class="desc">De apiários da região, sem aquecimento.</p>
       <span class="tag-price">R$ 18,00</span>
@@ -411,7 +475,7 @@
     <p>Hoje somos parte do dia a dia do bairro — o lugar onde você esquece a lista de compras em casa e mesmo assim sai com tudo certo.</p>
   </div>
   <div class="crate reveal">
-    <img src="https://images.pexels.com/photos/9705821/pexels-photo-9705821.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Vegetais frescos coloridos no balcão">
+    <img src="https://images.pexels.com/photos/9705821/pexels-photo-9705821.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Vegetais frescos coloridos no balcão" width="700" height="525" loading="lazy">
     <div class="crate-caption">Produtos frescos, direto do produtor pra sua casa</div>
   </div>
 </section>
@@ -428,12 +492,13 @@
       <div class="horario-row"><span class="dia">Sábado</span><span>7h30 – 18h00</span></div>
       <div class="horario-row"><span class="dia">Domingo</span><span>8h00 – 13h00</span></div>
     </div>
-    <div class="horario-card contato-card reveal" id="contato">
+    <div class="horario-card contato-card reveal" style="transition-delay:.08s" id="contato">
       <h3>Fale com a gente</h3>
       <p>📍 Rua das Palmeiras, 128 — Bairro Vila Nova</p>
-      <p>📞 (92) 99999-0000</p>
+      <!-- REVISAR: dado fictício — telefone termina em -0000 e segue padrão de número de exemplo; confirme o número real do estabelecimento. -->
+      <p>📞 <a href="tel:+5592999990000">(92) 99999-0000</a></p>
       <p>💬 Encomendas também pelo WhatsApp</p>
-      <a class="btn stamp-btn" href="#">Chamar no WhatsApp</a>
+      <a class="btn stamp-btn" href="https://wa.me/5592999990000" target="_blank" rel="noopener">Chamar no WhatsApp</a>
     </div>
   </div>
 </section>
